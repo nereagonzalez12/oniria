@@ -1,0 +1,17 @@
+<div class="people-form">
+    <form [formGroup]="peopleForm" (ngSubmit)="onSubmit()">
+
+        <input [ngClass]="{'is-invalid': hasErrors('name', 'required')}" type="text" formControlName="name"
+            class="form-control input-people" placeholder="Nombre">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend input-username-decoration">
+                <div class="input-group-text input-username-decoration-text">@</div>
+            </div>
+            <input type="text" class="form-control input-people" placeholder="username" formControlName="username">
+        </div>
+        <div class="edit-post-buttons">
+            <button type="submit" class="save-button">Guardar</button>
+            <button type="button" class="discard-button" (click)="discardButton()">Descartar</button>
+        </div>
+    </form>
+</div>

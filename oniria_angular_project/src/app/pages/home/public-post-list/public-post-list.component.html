@@ -1,0 +1,175 @@
+<ng-container class="dream-list-container" *ngIf="!loading">
+    <div class="dream-post nonEmpty" *ngFor="let post of postList" #scrollContainer>
+        <div class="profile-image" *ngIf="userDetailsMap[post.user]">
+            <img *ngIf="userDetailsMap[post.user] && userDetailsMap[post.user].profile_image && !loadingImageProfile"
+                [src]="userDetailsMap[post.user].profile_image" alt="{{ userDetailsMap[post.user].username }}"
+                (click)="showImageOverlay(userDetailsMap[post.user].profile_image)" />
+            <img *ngIf="!userDetailsMap[post.user] || !userDetailsMap[post.user].profile_image || loadingImageProfile"
+                src="assets\svg\ilustration\owl_profile.svg" alt="Profile Image"
+                (click)="showImageOverlay('assets\svg\ilustration\owl_profile.svg')" />
+        </div>
+        <ng-container *ngIf="!loading && userDetailsMap[post.user]">
+
+            <div class="bubble-dream">
+                <div class="post-info">
+                    <div class="username" (click)="obtainUserProfile(userDetailsMap[post.user].id)">@{{
+                        userDetailsMap[post.user].username }}</div>
+                    <small class="public-date">{{ post.public_date | timeAgo }}</small>
+                </div>
+                <div class="post-content">
+                    <div class="post-title">
+                        <div class="title"><em>{{ post.title }}</em></div>
+                        <div class="dream-date">{{ post.dream_date | date: 'dd/MM/yyyy' }}</div>
+                    </div>
+                    <ng-container *ngFor="let paragraph of getPostParagraphs(post.content)">
+                        <p>{{ paragraph }}</p>
+                    </ng-container>
+                    <div class="list-post-categories">
+                        <!-- Mostrar solo las categorías relacionadas con esta publicación -->
+                        <ng-container *ngFor="let category of post.categories">
+                            <div class="category-container">
+                                <div class="category-content">
+                                    {{ category.name | lowercase }}
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="edit-post-buttons">
+                    <div class="comment-button">
+                        <img [src]="selectedPostId === post.id ? 'assets/svg/blue-comment-icon.svg' : 'assets/svg/comment-icon.svg'"
+                            alt="comment icon" (click)="toggleComments(post.id)">
+                        <div class="comments">{{ commentCounts[post.id] }}</div>
+                    </div>
+                    <div class="like-button">
+                        <input class="checkbox" type="checkbox" [id]="'checkbox' + post.id"
+                            [checked]="likeStatus[post.id]" (change)=" toggleLike(post.id)" />
+                        <ng-container class="likes-container">
+                            <label [for]="'checkbox' + post.id">
+                                <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                                        <path
+                                            d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z"
+                                            id="heart" fill="#292D3E" />
+                                        <circle id="main-circ" fill="#6871F1" opacity="0" cx="29.5" cy="29.5" r="1.5" />
+
+                                        <g id="grp7" opacity="0" transform="translate(7 6)">
+                                            <circle id="oval1" fill="#2A408F" cx="2" cy="6" r="2" />
+                                            <circle id="oval2" fill="#8D92E7" cx="5" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp6" opacity="0" transform="translate(0 28)">
+                                            <circle id="oval1" fill="#CC8EF5" cx="2" cy="7" r="2" />
+                                            <circle id="oval2" fill="#F8D977" cx="3" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp3" opacity="0" transform="translate(52 28)">
+                                            <circle id="oval2" fill="#9CD8C3" cx="2" cy="7" r="2" />
+                                            <circle id="oval1" fill="#5fbcf6" cx="4" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp2" opacity="0" transform="translate(44 6)">
+                                            <circle id="oval2" fill="#EF5350" cx="5" cy="6" r="2" />
+                                            <circle id="oval1" fill="#EF5350" cx="2" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp5" opacity="0" transform="translate(14 50)">
+                                            <circle id="oval1" fill="#6871f1" cx="6" cy="5" r="2" />
+                                            <circle id="oval2" fill="#8D92E7" cx="2" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp4" opacity="0" transform="translate(35 50)">
+                                            <circle id="oval1" fill="#eeb35a" cx="6" cy="5" r="2" />
+                                            <circle id="oval2" fill="#eeb35a" cx="2" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp1" opacity="0" transform="translate(24)">
+                                            <circle id="oval1" fill="#36A0F5" cx="2.5" cy="3" r="2" />
+                                            <circle id="oval2" fill="#36A0F5" cx="7.5" cy="2" r="2" />
+                                        </g>
+                                    </g>
+                                </svg>
+                                <div class="likes">{{ likeCounts[post.id] }}</div>
+                            </label>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="comment-section" *ngIf="selectedPostId === post.id">
+                    <div class="comment-form">
+                        <small class="comment-to">responder a <mark>@{{
+                                userDetailsMap[post.user].username }}</mark></small>
+                        <textarea class="comment-input" placeholder="¿Qué opinas de este sueño?"
+                            [(ngModel)]="newCommentContent"></textarea>
+                        <button class="comment-form-button" (click)="submitComment(post.id)">Enviar</button>
+                    </div>
+                    <div *ngFor="let comment of comments">
+                        <div class="comment">
+                            <div class="comment-profile-image" *ngIf="userDetailsMap[comment.user]">
+                                <img *ngIf="userDetailsMap[comment.user] && userDetailsMap[comment.user].profile_image && !loadingImageProfile"
+                                    [src]="userDetailsMap[comment.user].profile_image"
+                                    alt="{{ userDetailsMap[comment.user].username }}"
+                                    (click)="showImageOverlay(userDetailsMap[comment.user].profile_image)" />
+                                <img *ngIf="!userDetailsMap[comment.user] || !userDetailsMap[comment.user].profile_image || loadingImageProfile"
+                                    src="assets/svg/ilustration/owl_profile.svg" alt="Profile Image"
+                                    (click)="showImageOverlay('assets/svg/ilustration/owl_profile.svg')" />
+                            </div>
+                            <div class="comment-bubble">
+                                <div class="comment-info-container">
+                                    <div class="comment-info">
+                                        <div class="comment-username"
+                                            (click)="obtainUserProfile(userDetailsMap[comment.user].id)">
+                                            @{{ userDetailsMap[comment.user].username }}</div>
+                                        <div style="color: #444D6A;">✦</div>
+                                        <small class="public-date" *ngIf="comment.created_at"> {{ comment.created_at |
+                                            timeAgo }}</small>
+                                        <div class="delete-comment-container">
+                                            <img class="delete-comment"
+                                                *ngIf="comment.user === loggedInId && comment.id"
+                                                src="assets\svg\light-trash-icon.svg" alt="trash-icon"
+                                                (click)="deleteComment(comment.id)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment-content-container">
+                                    <div class="comment-content">
+                                        <div>{{ comment.content }}</div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Capa superpuesta para mostrar la imagen agrandada -->
+            <div class="image-overlay" *ngIf="showOverlay" (click)="hideImageOverlay()">
+                <img [src]="overlayImageUrl" alt="Imagen agrandada">
+            </div>
+        </ng-container>
+    </div>
+
+
+</ng-container>
+<div class="dream-post" *ngIf="postList.length === 0 && !loading && likedPostFound">
+    <object type="image/svg+xml" data=" assets\svg\ilustration\no-public-post-ilustration.svg"
+        alt="no-public-post-ilustration"></object>
+</div>
+
+<div class="not-liked-post-found" *ngIf="postList.length === 0 && !loading && !likedPostFound">
+    <object type="image/svg+xml" data=" assets\svg\ilustration\not-liked-post-found.svg"
+        alt="not-liked-post-found"></object>
+</div>
+
+<div *ngIf="loading" class="fade-in-animation loading">
+    <div class="wrapper">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="shadow"></div>
+        <div class="shadow"></div>
+        <div class="shadow"></div>
+    </div>
+</div>

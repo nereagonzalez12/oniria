@@ -1,0 +1,120 @@
+.visibility-popup {
+    --total_text_color: var(--light-color);
+    --btn_bg: var(--font-post-color);
+    --btn_padding: 0.5em;
+    --btn_height: 2em;
+    --btn_border_radius: 0.3125em;
+    --btn_outline_width: 0.0625em;
+    --btn_outline_color: transparent;
+    --btn_outline_offset: 0.0625em;
+    --btn_gap: 0.3125em;
+    --list_padding: 0.5em;
+    --list_bg: var(--btn_bg);
+    --list_border_radius: var(--btn_border_radius);
+    --list_gap: 0.1875em;
+    --list_btn_hover_bg: rgb(0, 0, 0, 0.1);
+    --list_btn_active: rgb(0, 0, 0, 0.1);
+    --list_btn_border_radius: 0.25em;
+    --list_btn_padding: 0.35em 1em;
+    --list_btn_gap: 0.4375em;
+    --list_btn_outline_width: 0.01em;
+    --list_btn_outline_color: transparent;
+    --list_offset: 0.35em;
+    --list_btn_font_size: 14px;
+    --list_position_left: 0;
+    --list_position_right: unset;
+}
+
+.visibility-popup__list-container {
+    position: absolute;
+    left: -1em;
+    right: unset;
+    top: calc(1.17em + 0.35em);
+    box-shadow: -5px -5px 10px 0 rgba(0, 0, 0, 0.1), 5px 5px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.visibility-popup__list {
+    max-height: 200px;
+    margin: 0;
+    list-style-type: none;
+    padding: 0.5em;
+    border-radius: var(--btn_border_radius) !important;
+    background-color: var(--list_bg);
+    /* Utiliza la variable CSS definida anteriormente */
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.1875em;
+    overflow: scroll;
+}
+
+.visibility-popup__list div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.visibility-popup__list::-webkit-scrollbar {
+    display: none;
+}
+
+.dropdown-item {
+    justify-content: center;
+    line-height: var(--btn_height);
+    background-color: var(--btn_bg);
+    border-radius: var(--btn_border_radius);
+    border: none;
+    font-family: inherit;
+    outline: none;
+    font-size: var(--list_btn_font_size);
+    color: var(--light-color);
+    text-align: center;
+}
+
+.visibility-popup__list button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.35em;
+    /* Ajusta según sea necesario */
+    border-radius: 0.25em;
+    /* Ajusta según sea necesario */
+    white-space: nowrap;
+    background-color: transparent;
+    /* Ajusta según sea necesario */
+    border: none;
+    cursor: pointer;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.visibility-popup__list button:hover,
+.visibility-popup__button:hover {
+    background-color: var(--list_btn_hover_bg);
+}
+
+.visibility-popup__list button:active,
+.visibility-popup__button:active {
+    background-color: var(--list_btn_hover_bg) !important;
+    color: var(--light-color) !important;
+}
+
+.visibility-popup__list button:focus {
+    outline: none;
+}
+
+.visibility-popup__list button[aria-selected="true"] {
+    background-color: var(--list_btn_active);
+
+    /* Utiliza la variable CSS definida anteriormente */
+    outline: var(--list_btn_outline_width) solid var(--list_btn_outline_color);
+    /* Utiliza la variable CSS definida anteriormente */
+}
+
+button:disabled {
+    background-color: var(--list_btn_hover_bg) !important;
+    cursor: not-allowed;
+    color: var(--light-color);
+    /* Cambia el cursor a "no permitido" */
+}

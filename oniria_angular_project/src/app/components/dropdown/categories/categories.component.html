@@ -1,0 +1,15 @@
+<div class="visibility-popup">
+    <div class="visibility-popup__list-container">
+        <div class="visibility-popup__list">
+            <div *ngFor="let category of categoryList">
+                <button class="dropdown-item" *ngIf="isCategorySelected(category)" [disabled]="true">
+                    {{ category.name | lowercase }}
+                </button>
+                <button class="dropdown-item" [class.selected]="isCategorySelected(category)"
+                    (click)="selectCategory(category)" *ngIf="!isCategorySelected(category)">
+                    {{ category.name | lowercase }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

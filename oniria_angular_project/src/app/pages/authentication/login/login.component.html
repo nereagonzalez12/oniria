@@ -1,0 +1,47 @@
+<div class="container basics">
+    <!-- ERRORES -->
+    <div class="card primary-card col-4">
+        <app-back-button [route]="'/'"></app-back-button>
+        <div class="card secondary-card">
+            <h1 class="pb-4">Introduce tu usuario</h1>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+                <div class="form-group mb-4">
+                    <input [ngClass]="{'is-invalid': hasErrors('username', 'required')}" type="text"
+                        class="form-control" id="username" placeholder="Nombre de usuario" formControlName="username">
+                </div>
+                <div class="form-group mb-4">
+                    <div class="password-container">
+                        <input [ngClass]="{'is-invalid': hasErrors('password', 'required')}" [type]="passwordFieldType"
+                            class="form-control" id="password" placeholder="Contraseña" formControlName="password">
+                        <span class="toggle-password" (click)="togglePasswordVisibility()">
+                            <img *ngIf="passwordFieldType === 'password'" src="assets/svg/close-padlock.svg"
+                                alt="Mostrar contraseña">
+                            <img *ngIf="passwordFieldType === 'text'" src="assets/svg/open-padlock.svg"
+                                alt="Ocultar contraseña">
+                        </span>
+                    </div>
+                    <small class="m-2">
+                        <a class="forgotPass" (click)="noRestartPass()">¿Olvidaste tu contraseña? <mark
+                                *ngIf="passResponse">pues
+                                acuérdate, aún
+                                no lo he implementado</mark></a>
+                        <!-- <div>a</div> -->
+                    </small>
+                </div>
+                <div class="cntr">
+                    <input class="hidden-xs-up" type="checkbox" id="agreeCheck" formControlName="rememberMe">
+                    <label class="cbx" for="agreeCheck"></label>
+                    <label class="lbl" for="agreeCheck">Recuérdame</label>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="btn btn-lg button button-login">Iniciar
+                        sesión</button>
+                    <small class=" m-3">
+                        ¿No tienes cuenta? <a [routerLink]="['/signup']">Regístrate</a>
+                    </small>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

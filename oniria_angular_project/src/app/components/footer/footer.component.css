@@ -1,0 +1,8 @@
+.footer-image-scale {
+    max-width: 100px;
+}
+
+.p-info {
+    color: var(--primary-color);
+    font-size: small;
+}

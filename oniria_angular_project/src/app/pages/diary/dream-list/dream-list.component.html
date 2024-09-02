@@ -1,0 +1,167 @@
+<ng-container class="dream-list-container" *ngIf="!loading">
+    <a *ngIf="postList.length > 0" id="scroll-up" class="scroll-up" (click)="restartScroll()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"></path>
+            <path fill="rgba(255,255,255,1)"
+                d="M11.9997 10.8284L7.04996 15.7782L5.63574 14.364L11.9997 8L18.3637 14.364L16.9495 15.7782L11.9997 10.8284Z">
+            </path>
+        </svg>
+    </a>
+
+    <div class="info-container">
+        <div class="infoPriv" id="popup-info">{{ contentInfoPriv }}<small class="dark-text">(Puedes cambiar
+                la privacidad
+                editando el sueño)</small></div>
+    </div>
+    <app-delete-alert *ngIf="showDeleteAlert" [itemToDelete]="postToDelete" (deleteConfirmed)="deleteConfirmed($event)"
+        [deleteMessage]="'El sueño <b>' + (postToDelete?.title || '') + '</b> va a eliminarse de forma permanente
+        del
+        diario. ¿Estás de acuerdo?'" (deleteDismissed)="dismissDelete()">
+    </app-delete-alert>
+    <div class="dream-post nonEmpty" *ngFor="let post of postList" #scrollContainer>
+        <ng-container *ngIf="!loading">
+            <div class="bubble-dream"
+                *ngIf="showCreatePost || !selectedEditPost || selectedEditPost.id !== post.id && !showEditPostForm; else editMode">
+                <div class="post-title">
+                    <div class="title">{{ post.title }}</div>
+                    <div class="dream-date">{{ post.dream_date | date: 'dd/MM/yyyy' }}</div>
+                </div>
+                <div class="post-content">
+                    <div *ngFor="let paragraph of getPostParagraphs(post.content)">
+                        <p>{{ paragraph }}</p>
+                    </div>
+                    <div class="list-post-categories">
+                        <ng-container *ngFor="let category of post.category">
+                            <div *ngIf="getCategoryName(category) as categoryName" class="category-container">
+                                <div class="category-content">
+                                    {{ categoryName | lowercase }}
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="edit-post-buttons">
+                    <button type="button" class="edit-buton" (click)="editPost(post)"><img
+                            src="assets\svg\pencil-icon.svg" alt="pencil-icon">
+                        <div>Editar</div>
+                    </button>
+                    <button type="button" class="category-button" (click)="toggleCategoriesDropdown(post, $event)">
+                        <img src="assets\svg\two-stars-icon.svg" alt="two-stars-icon">
+                        <div>Etiquetas</div>
+                    </button>
+                    <button type="button" class="people-button" (click)="togglePeopleDropdown(post, $event)">
+                        <img src="assets\svg\add-intruders.svg" alt="add-intruders">
+                        <div>Intrusos</div>
+                    </button>
+                    <!-- Botones de privacidad -->
+                    <button *ngIf="post.privacy === 'public'" type="button" class="public-button"
+                        (click)="showInfoPriv(post.privacy, $event, post)">
+                        <img src="assets/svg/public-icon.svg" alt="public-icon">
+                        <div>Público</div>
+                    </button>
+                    <button *ngIf="post.privacy === 'private'" type="button" class="private-button"
+                        (click)="showInfoPriv(post.privacy, $event, post)">
+                        <img src="assets/svg/private-icon.svg" alt="private-icon">
+                        <div>Privado</div>
+                    </button>
+                    <button *ngIf="post.privacy === 'friends'" type="button" class="friends-button"
+                        (click)="showInfoPriv(post.privacy, $event, post)">
+                        <img src="assets/svg/friends-privacity-icon.svg" alt="friends-icon">
+                        <div>Solo amigos</div>
+                    </button>
+                    <button type="button" class="delete-post-button"><img src="assets\svg\trash-icon.svg"
+                            alt="trash-icon" (click)="confirmDelete(post)"></button>
+                </div>
+            </div>
+            <ng-template #editMode>
+                <div class="dream-post">
+                    <form [formGroup]="editPostForm" class="bubble-dream" (ngSubmit)="submitEditPost()">
+                        <div class="edit-post-title">
+                            <div class="title">
+                                <input type="text" [ngClass]="{'is-invalid': hasErrors('title', 'required')}"
+                                    formControlName="title" class="form-control edit-input-title"
+                                    placeholder="Título chulísimo">
+                            </div>
+                            <div class="dream-date">
+                                <input [ngClass]="{'is-invalid': hasErrors('dream_date', 'required')}" type="date"
+                                    formControlName="dream_date" class="form-control edit-input-content">
+
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <textarea [ngClass]="{'is-invalid': hasErrors('content', 'required')}"
+                                formControlName="content" class="form-control edit-input-date"
+                                placeholder="¿Qué has soñado?"></textarea>
+                            <div class="list-post-categories">
+                                <div *ngFor="let category of post.category">
+                                    <div *ngIf="getCategoryName(category) as categoryName" class="category-container"
+                                        [ngClass]="{ 'shaking': isShaking[category] }">
+                                        <div class="category-content">
+                                            {{ categoryName | lowercase }}
+                                            <button type="button">
+                                                <img class="delete-category-icon"
+                                                    (mouseenter)="startShakeAnimation(category)"
+                                                    (mouseleave)="stopShakeAnimation(category)"
+                                                    src="assets/svg/cross-icon-light.svg" alt="cross-icon-mono"
+                                                    (click)="confirmDeleteCategory(category)">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="edit-post-buttons">
+                            <button type="submit" class="save-button"><svg class="checkmark"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                </svg>Guardar </button>
+                            <app-dropdown (optionSelected)="updatePrivacyOption($event)"></app-dropdown>
+                            <button type="button" class="discard-button" (click)="discardButton()">Descartar</button>
+
+                        </div>
+                    </form>
+                </div>
+            </ng-template>
+        </ng-container>
+    </div>
+
+
+    <!-- Dropdown de categorias  -->
+    <div class="visibility-popup-categories" [class.active]="categoriesDropdownVisible" id="popup-categories">
+        <app-categories *ngIf="categoriesDropdownVisible" (categorySelected)="addCategoryToPost($event, selectedPost)"
+            [categoryList]="categoryList" [selectedCategories]="selectedPost.category"
+            [dropdownVisible]="categoriesDropdownVisible" [style.left.px]="popupLeft"
+            [style.top.px]="popupTop"></app-categories>
+    </div>
+
+    <!-- Dropdown de intrusos  -->
+    <div class="visibility-popup-people" [class.active]="peopleDropdownVisible" id="popup-people">
+        <app-people-involved *ngIf="peopleDropdownVisible" (peopleSelected)="addPeopleToPost($event, selectedPost)"
+            [peopleList]="peopleList" [selectedPeople]="selectedPost.people_involved"
+            (removePeople)="removePeopleFromPost($event, selectedPost)" [dropdownVisible]="peopleDropdownVisible"
+            [style.left.px]="popupLeft" [style.top.px]="popupTop"></app-people-involved>
+    </div>
+</ng-container>
+<div class="dream-post"
+    *ngIf="postList.length === 0 && !showCreatePost && !showEditPostForm && !loading && !noPostFound">
+    <!-- <img src=" assets\svg\ilustration\no-post-ilustration.svg" alt="pencil-icon"> -->
+    <object type="image/svg+xml" data=" assets\svg\ilustration\no-post-ilustration.svg"
+        alt="no-post-ilustration"></object>
+</div>
+<div class="dream-post"
+    *ngIf="postList.length === 0 && !showCreatePost && !showEditPostForm && !loading && noPostFound">
+    <!-- <img src=" assets\svg\ilustration\no-post-ilustration.svg" alt="pencil-icon"> -->
+    <object type="image/svg+xml" data=" assets\svg\ilustration\not-found-post-ilustration.svg"
+        alt="not-found-post"></object>
+</div>
+<div *ngIf="loading" class="fade-in-animation loading">
+    <div class="wrapper">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="shadow"></div>
+        <div class="shadow"></div>
+        <div class="shadow"></div>
+    </div>
+</div>

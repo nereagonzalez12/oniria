@@ -1,0 +1,20 @@
+<div class="visibility-popup">
+    <div class="visibility-popup__list-container">
+        <div class="visibility-popup__list">
+            <div *ngFor="let people of peopleList">
+                <button class="dropdown-item" [class.selected]="isPeopleInvolvedSelected(people)"
+                    (click)="selectPeopleInvolved(people)" *ngIf="!isPeopleInvolvedSelected(people)">
+                    {{ people.name }}
+                </button>
+                <div *ngIf="isPeopleInvolvedSelected(people)">
+                    <button class="dropdown-item" [disabled]="true">
+                        {{ people.name }}
+                    </button>
+                    <button class="remove-button" (click)="removePeople.emit(people)">
+                        <img class="delete-category-icon" src="assets/svg/cross-icon.svg" alt="cross-icon">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

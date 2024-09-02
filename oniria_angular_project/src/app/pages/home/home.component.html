@@ -1,0 +1,48 @@
+<div class="basics home">
+    <div class="left-section">
+        <div class="left-header"><button class="back-diary" [routerLink]="['/diary']">
+                <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                        transform="scale(-1, 1) translate(-320, 0)" />
+                </svg>
+                <span>VOLVER AL DIARIO</span>
+            </button></div>
+        <div class="link-button">
+            <form [formGroup]="searchForm">
+                <button type="submit"><img src="assets\svg\light-blue-lens.svg" alt="lens"></button>
+                <div class="title">
+                    <input type="text" formControlName="parameter" class="form-control input-search"
+                        placeholder="BUSCAR" name="searchQuery" (input)="searchPostsInput()" autocomplete="off">
+                </div>
+            </form>
+        </div>
+        <div class="link-button liked-post" (click)="likedPosts()">
+            <button type="button"><img src="assets/svg/color-heart.svg" alt="color-heart"></button>
+            <div class="title">
+                SUEÑOS FAVORITOS
+            </div>
+        </div>
+        <footer class="footer-text no-movil">
+            <div>
+                <img src="assets\svg\oniria-dark-text.svg" alt="oniria_text">
+            </div>
+        </footer>
+    </div>
+
+    <div class="post-section">
+        <div class="top-buttons">
+            <button class="public-list" [class.active]="activeButton === 'public'"
+                (click)="setActiveButton('public')">COMUNIDAD</button>
+            <button class="friends-list" [class.active]="activeButton === 'friends'"
+                (click)="setActiveButton('friends')">AMIGOS</button>
+        </div>
+        <div class="dream-list">
+            <app-public-post-list #childComponent [activeButton]="activeButton"
+                (selectedUser)="sendSelectedUser($event)"></app-public-post-list>
+        </div>
+    </div>
+    <div class="right-section">
+        <app-public-show-profile [selectedUser]="selectedUser"></app-public-show-profile>
+    </div>
+</div>

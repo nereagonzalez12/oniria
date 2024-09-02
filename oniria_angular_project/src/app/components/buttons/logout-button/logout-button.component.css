@@ -1,0 +1,33 @@
+/* BOTÓN CERRAR SESIÓN */
+.logout-button {
+    position: absolute;
+    right: 8%;
+    bottom: 2%;
+    font-size: 18px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+
+}
+
+b {
+    margin-right: 10px;
+}
+
+.logout-button button {
+    background-color: transparent;
+    border: none;
+}
+
+.logout-button button img {
+    width: 70%;
+    transition: transform 0.15s ease;
+    /* Añadir una transición suave */
+}
+
+.logout-button button:hover img {
+    transform: scale(1.2);
+    /* Aumenta el tamaño de la imagen */
+    content: url('/assets/svg/off-red-button.svg');
+    /* Cambia la imagen */
+}

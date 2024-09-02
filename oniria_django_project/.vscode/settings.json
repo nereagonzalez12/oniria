@@ -1,0 +1,8 @@
+{
+    "python.analysis.packageIndexDepths": [
+        { "name": "", "depth": 8, "includeAllSymbols": true }
+    ],
+    "prettier.singleQuote": true,
+    "html.completion.attributeDefaultValue": "singlequotes",
+    "prettier.jsxSingleQuote": true
+}

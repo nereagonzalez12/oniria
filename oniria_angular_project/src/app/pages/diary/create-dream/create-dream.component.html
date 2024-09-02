@@ -1,0 +1,65 @@
+<div class="dream-post">
+    <form [formGroup]="postForm" class="bubble-dream" (ngSubmit)="onSubmit()">
+        <div class="post-title">
+            <div class="title"><input [ngClass]="{'is-invalid': hasErrors('title', 'required')}" type="text"
+                    formControlName="title" class="form-control input-title" placeholder="Título chulísimo"
+                    (input)="saveFormDataToSessionStorage()">
+            </div>
+            <div class="dream-date"><input [ngClass]="{'is-invalid': hasErrors('dream_date', 'required')}" type="date"
+                    formControlName="dream_date" class="form-control input-content"
+                    (input)="saveFormDataToSessionStorage()">
+            </div>
+        </div>
+        <div class="post-content"><textarea [ngClass]="{'is-invalid': hasErrors('content', 'required')}"
+                formControlName="content" class="form-control input-date" placeholder="¿Qué has soñado?"
+                (input)="saveFormDataToSessionStorage()"></textarea>
+            <div class="list-post-categories">
+                <div *ngFor="let category of selectedCategories">
+                    <div *ngIf="getCategoryName(category) as categoryName" class="category-container"
+                        [ngClass]="{ 'shaking': isShaking[category] }">
+                        <div class="category-content">
+                            {{ categoryName | lowercase }}
+                            <button type="button">
+                                <img class="delete-category-icon" (mouseenter)="startShakeAnimation(category)"
+                                    (mouseleave)="stopShakeAnimation(category)" src="assets/svg/cross-icon-light.svg"
+                                    alt="cross-icon-mono" (click)="confirmDelete(category)">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="edit-post-buttons">
+            <!-- DESPLEGABLE VISIBILIDAD -->
+            <button type="submit" class="save-button"><svg class="checkmark" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 40 40">
+                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                </svg>Guardar </button>
+            <button type="button" class="category-button" (click)="toggleCategoriesDropdown($event)"> <img
+                    src="assets\svg\two-stars-icon.svg" alt="two-stars-icon">
+            </button>
+            <button type="button" class="category-button" (click)="togglePeopleDropdown($event)"> <img
+                    src="assets\svg\add-intruders.svg" alt="add-intruders">
+            </button>
+            <app-dropdown (optionSelected)="updatePrivacyOption($event)"></app-dropdown>
+            <button type="button" class="discard-button" (click)="discardButton()">Descartar</button>
+            <div class="visibility-popup-categories" [class.active]="categoriesDropdownVisible" id="popup-categories">
+                <app-categories *ngIf="categoriesDropdownVisible" [categoryList]="categoryList"
+                    [selectedCategories]="selectedCategories" [dropdownVisible]="categoriesDropdownVisible"
+                    (categorySelected)="addCategoryToPost($event)" [style.left.px]="popupLeft"
+                    [style.top.px]="popupTop">
+                </app-categories>
+            </div>
+            <div class="visibility-popup-people" [class.active]="peopleDropdownVisible" id="popup-people">
+                <app-people-involved *ngIf="peopleDropdownVisible" [peopleList]="peopleList"
+                    [selectedPeople]="selectedPeople" (peopleSelected)="addPeopleToPost($event)"
+                    [dropdownVisible]="peopleDropdownVisible" [style.left.px]="popupLeft" [style.top.px]="popupTop">
+                </app-people-involved>
+            </div>
+        </div>
+    </form>
+</div>
+
+<app-info-alert *ngIf="showInfoAlert" [infoMessage]="infoMessage" (infoConfirmed)="confirmPost()"
+    (infoDismissed)="cancelPost()"></app-info-alert>

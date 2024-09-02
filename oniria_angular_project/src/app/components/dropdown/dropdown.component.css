@@ -1,0 +1,209 @@
+.visibility-popup {
+    --total_text_color: var(--light-color);
+    --btn_bg: var(--font-post-color);
+    --btn_padding: 0.5em;
+    --btn_height: 2em;
+    --btn_border_radius: 0.3125em;
+    --btn_outline_width: 0.0625em;
+    --btn_outline_color: transparent;
+    --btn_outline_offset: 0.0625em;
+    --btn_gap: 0.3125em;
+    --list_padding: 0.5em;
+    --list_bg: var(--btn_bg);
+    --list_border_radius: var(--btn_border_radius);
+    --list_gap: 0.1875em;
+    --list_btn_hover_bg: rgb(0, 0, 0, 0.1);
+    --list_btn_active: rgb(0, 0, 0, 0.1);
+    --list_btn_border_radius: 0.25em;
+    --list_btn_padding: 0.35em 1em;
+    --list_btn_gap: 0.4375em;
+    --list_btn_outline_width: 0.01em;
+    --list_btn_outline_color: transparent;
+    --list_offset: 0.35em;
+    --list_btn_font_size: 14px;
+    --list_position_left: 0;
+    --list_position_right: unset;
+}
+
+.visibility-popup__button .visibility-popup__icons img,
+#public,
+#private,
+#friends,
+#checkbox,
+.visibility-popup__list-container {
+    display: none;
+}
+
+.visibility-popup {
+    color: var(--total_text_color);
+    font-family: var(--total_font_family);
+    position: relative;
+    user-select: none;
+}
+
+.visibility-popup__list-container {
+    position: absolute;
+    left: var(--list_position_left);
+    right: var(--list_position_right);
+    top: calc(var(--btn_height) + var(--list_offset));
+    box-shadow: -5px -5px 10px 0 rgba(0, 0, 0, 0.1), 5px 5px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.visibility-popup__icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+}
+
+.visibility-popup__button {
+    line-height: var(--btn_height);
+    background-color: var(--btn_bg);
+    padding: 0 var(--btn_padding);
+    display: inline-flex;
+    align-items: center;
+    column-gap: var(--btn_gap);
+    border-radius: var(--btn_border_radius);
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    outline: none;
+}
+
+.visibility-popup__list {
+    margin: 0;
+    list-style-type: none;
+    padding: var(--list_padding);
+    border-radius: var(--list_border_radius);
+    background-color: var(--list_bg);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--list_gap);
+}
+
+.visibility-popup__list label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: var(--list_btn_gap);
+    padding: var(--list_btn_padding);
+    border-radius: var(--list_btn_border_radius);
+    white-space: nowrap;
+}
+
+.visibility-popup__list label span {
+    font-size: var(--list_btn_font_size);
+}
+
+/* Acciones */
+
+#checkbox:checked~.visibility-popup__button {
+    outline: var(--btn_outline_width) solid var(--btn_outline_color);
+    outline-offset: var(--btn_outline_offset);
+}
+
+#checkbox:checked~.visibility-popup__list-container {
+    display: block;
+}
+
+.visibility-popup__list label:hover,
+.visibility-popup__button:hover,
+#checkbox:checked~.visibility-popup__button {
+    background-color: var(--list_btn_hover_bg);
+}
+
+#public:checked~.visibility-popup__list-container label[for="public"],
+#private:checked~.visibility-popup__list-container label[for="private"],
+#friends:checked~.visibility-popup__list-container label[for="friends"] {
+    background-color: var(--list_btn_active);
+    outline: var(--list_btn_outline_width) solid var(--list_btn_outline_color);
+}
+
+#public:checked~label img.public,
+#private:checked~label img.private,
+#friends:checked~label img.friends {
+    display: block;
+}
+
+.visibility-popup__icons img {
+    width: 100%;
+}
+
+.visibility-popup {
+    display: flex;
+
+}
+
+
+.default {
+    background-color: transparent !important;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+}
+
+.default img {
+    width: 22px !important;
+    cursor: pointer;
+}
+
+.text {
+    margin-left: 5px !important;
+}
+
+/* TOOLTIPS */
+.tooltip-containter {
+    width: auto;
+    position: relative;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+}
+
+.tooltip {
+    width: 300px;
+    position: absolute;
+    top: 0;
+    left: 90%;
+    background: var(--secondary-color);
+    font-size: 9;
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition-delay: 0.5s;
+}
+
+.tooltip::before {
+    position: absolute;
+    content: "";
+    background: var(--background-color);
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.tooltip-containter:hover .tooltip {
+    top: -45px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+svg:hover span,
+svg:hover .tooltip {
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-containter:hover,
+.tooltip-containter:hover .tooltip,
+.tooltip-containter:hover .tooltip::before {
+    color: var(--light-color);
+}

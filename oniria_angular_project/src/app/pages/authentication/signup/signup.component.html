@@ -1,0 +1,153 @@
+<div class="container basics">
+    <div class="card primary-card col-4">
+        <app-back-button [route]="'/'"></app-back-button>
+        <div class="card secondary-card" *ngIf="showPersonalDataForm">
+            <h1 class="pb-4">Crea tu cuenta</h1>
+            <form [formGroup]="personalDataForm" (ngSubmit)="onSubmitPersonalData()">
+                <div class=" form-group mb-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <input
+                                [ngClass]="{'is-invalid': hasErrors('firstName', 'required') || hasErrors('firstName', 'minlength') || hasErrors('firstName', 'maxlength')}"
+                                type="text" id="firstName" class="form-control" placeholder="Nombre"
+                                formControlName="firstName">
+                            <div class="invalid-feedback" *ngIf="hasErrors('firstName', 'minlength')">
+                                Mínimo 3 caracteres
+                            </div>
+                            <div class="invalid-feedback" *ngIf="hasErrors('firstName', 'maxlength')">
+                                Máximo 50 caracteres
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <input
+                                [ngClass]="{'is-invalid': hasErrors('lastName', 'required') || hasErrors('lastName', 'minlength') || hasErrors('lastName', 'maxlength')}"
+                                type="text" id="lastName" class="form-control" placeholder="Apellidos"
+                                formControlName="lastName">
+                            <div class="invalid-feedback" *ngIf="hasErrors('lastName', 'minlength')">
+                                Mínimo 3 caracteres
+                            </div>
+                            <div class="invalid-feedback" *ngIf="hasErrors('lastName', 'maxlength')">
+                                Máximo 50 caracteres
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-4">
+                    <input
+                        [ngClass]="{'is-invalid': hasErrors('email', 'required') || hasErrors('email', 'invalidEmail')}"
+                        class="form-control" type="email" id="email" name="email" placeholder="email@example.com"
+                        formControlName="email">
+                    <div class="invalid-feedback" *ngIf="hasErrors('email', 'invalidEmail')">
+                        Formato de email no válido
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <div class="password-container">
+                        <input
+                            [ngClass]="{'is-invalid': hasErrors('password', 'required') || hasErrors('password', 'minLength') || hasErrors('password', 'minUppercase') || hasErrors('password', 'minLowercase') || hasErrors('password', 'minNumbers') || hasErrors('password', 'minSpecialChars')}"
+                            [type]="passwordFieldType" id="password" class="form-control"
+                            aria-describedby="passwordHelpInline" placeholder="Contraseña" formControlName="password">
+                        <span class="toggle-password" (click)="togglePasswordVisibility()">
+                            <img *ngIf="passwordFieldType === 'password'" src="assets/svg/close-padlock.svg"
+                                alt="Mostrar contraseña">
+                            <img *ngIf="passwordFieldType === 'text'" src="assets/svg/open-padlock.svg"
+                                alt="Ocultar contraseña">
+                        </span>
+                    </div>
+                    <div class="invalid-feedback" *ngIf="hasErrors('password', 'minLength')">
+                        La contraseña debe tener al menos 8 caracteres
+                    </div>
+                    <div class="invalid-feedback" *ngIf="hasErrors('password', 'minUppercase')">
+                        La contraseña debe contener al menos una letra mayúscula
+                    </div>
+                    <div class="invalid-feedback" *ngIf="hasErrors('password', 'minLowercase')">
+                        La contraseña debe contener al menos una letra minúscula
+                    </div>
+                    <div class="invalid-feedback" *ngIf="hasErrors('password', 'minNumbers')">
+                        La contraseña debe contener al menos un número
+                    </div>
+                    <div class="invalid-feedback" *ngIf="hasErrors('password', 'minSpecialChars')">
+                        La contraseña debe contener al menos un carácter especial
+                    </div>
+                </div>
+
+
+                <div class="form-group mb-4">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                        [ngClass]="{'is-invalid': hasErrors('confirmPassword', 'required') || hasErrors('confirmPassword', 'mismatch')}"
+                        placeholder="Confirmar contraseña" formControlName="confirmPassword">
+                    <div class="invalid-feedback" *ngIf="hasErrors('confirmPassword', 'mismatch')">
+                        Las contraseñas no coinciden
+                    </div>
+                </div>
+
+                <div class="form-group mb-5">
+                    <div class="cntr">
+                        <input [ngClass]="{ 'is-invalid': submittedPersonalData && f['agreeCheck'].errors }"
+                            class="hidden-xs-up" type="checkbox" id="agreeCheck" formControlName="agreeCheck">
+                        <label class="cbx" for="agreeCheck"></label>
+                        <small class="lbl" [class.text-danger]="submittedPersonalData && f['agreeCheck'].errors"
+                            for="agreeCheck">Acepta que se almacenen cookies esenciales de inicio de sesión</small>
+                    </div>
+
+                </div>
+                <div class="button-container">
+                    <!-- <button type="submit" class="btn btn-lg button-right button-login">Siguente</button> -->
+                    <button class="btn-class-prev" *ngIf="!showPersonalDataForm">
+                        <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                                transform="scale(-1, 1) translate(-320, 0)" />
+                        </svg>
+                        <span>Atrás</span>
+                    </button>
+                    <button class="btn-class-next">
+                        <span>Aceptar</span>
+                        <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z">
+                            </path>
+                        </svg>
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="card secondary-card " *ngIf="!showPersonalDataForm">
+            <h1 class="pb-5">Escoge tu usuario</h1>
+            <form [formGroup]="usernameForm" (ngSubmit)="onSubmitUsernameForm()" class="form-username">
+                <div class="input-username mb-4">
+                    <input type="text" id="username" class="form-control" placeholder="Nombre de usuario"
+                        [ngClass]="{'is-invalid': hasErrors('username', 'required') || hasErrors('name', 'minlength') || hasErrors('name', 'maxlength')}"
+                        formControlName="username">
+                    <div class="invalid-feedback" *ngIf="hasErrors('username', 'minlength')">
+                        Mínimo 3 caracteres
+                    </div>
+                    <div class="invalid-feedback" *ngIf="hasErrors('username', 'maxlength')">
+                        Máximo 50 caracteres
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button class="btn-class-prev" *ngIf="!showPersonalDataForm" (click)="backButton()">
+                        <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                                transform="scale(-1, 1) translate(-320, 0)" />
+                        </svg>
+                        <span>Atrás</span>
+                    </button>
+                    <button class="btn-class-next">
+                        <span>Aceptar</span>
+                        <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,333 @@
+@import '~notyf/notyf.min.css';
+
+app-root {
+    z-index: 1;
+}
+
+
+@font-face {
+    font-family: 'Lexend';
+    src: url('src\assets\font\Lexend-VariableFont_wght.ttf');
+}
+
+.basics {
+    color: white;
+    font-family: "Lexend", sans-serif;
+    --post-text-color: #999aa4;
+    --light-text-color: #6B79A0;
+    --light-color: #666D89;
+    --dark-text-color: #444D6A;
+    --font-post-color: #3A4058;
+    --primary-color: #32364B;
+    /* --primary-color: #4b3232; */
+    --secondary-color: #292D3E;
+    --background-color: #1B1E2B;
+    --lighter-dark-color: #161823;
+    --dark-color: #11131B;
+
+    /* tonos más grises */
+    /* --light-color: #3F4248;
+    --font-post-color: #313338;
+    --primary-color: #2B2D31;
+    --secondary-color: #232428;
+    --background-color: #1E1F22;
+    --lighter-dark-color: #1E1F22;
+    --dark-color: #090705; */
+
+    /* colores */
+    --blue-color: #36A0F5;
+    --light-blue-color: #5fbcf6;
+    --dark-blue-color: #2A408F;
+    --purple-color: #6871f1;
+    --light-purple-color: #8D92E7;
+    --yellow-color: #F8D977;
+    --red-color: #EF5350;
+    --orange-color: #eeb35a;
+}
+
+/* BACKGROUND DE INPUTS DE FORMULARIOS AUTOCOMPLETADOS */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px var(--dark-color) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: rgb(255, 255, 255) !important;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+
+
+/* CHECKBOX CON ANIMACION*/
+.cbx {
+    position: relative;
+    top: 1px;
+    width: 27px;
+    height: 27px;
+    border: 1px solid #c8ccd4;
+    border-radius: 3px;
+    vertical-align: middle;
+    transition: background 0.1s ease;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.cbx:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 8px;
+    width: 7px;
+    height: 14px;
+    opacity: 0;
+    transform: rotate(45deg) scale(0);
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transition: all 0.3s ease;
+    transition-delay: 0.15s;
+}
+
+.lbl {
+    margin-left: 0.8em;
+    margin-top: 0.2em;
+    cursor: pointer;
+}
+
+#agreeCheck:checked~.cbx {
+    border-color: transparent;
+    background: var(--purple-color);
+    animation: jelly 0.6s ease;
+}
+
+#agreeCheck:checked~.cbx:after {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+}
+
+.cntr {
+    position: relative;
+    display: flex;
+
+}
+
+@keyframes jelly {
+    from {
+        transform: scale(1, 1);
+    }
+
+    30% {
+        transform: scale(1.25, 0.75);
+    }
+
+    40% {
+        transform: scale(0.75, 1.25);
+    }
+
+    50% {
+        transform: scale(1.15, 0.85);
+    }
+
+    65% {
+        transform: scale(0.95, 1.05);
+    }
+
+    75% {
+        transform: scale(1.05, 0.95);
+    }
+
+    to {
+        transform: scale(1, 1);
+    }
+}
+
+.hidden-xs-up {
+    display: none !important;
+}
+
+/* BOTON NEXT y PREVIOUS */
+.btn-class-next,
+.btn-class-prev {
+    --color: 104, 113, 241;
+    border-radius: .5em;
+    transition: .3s;
+    background-color: var(--background-color);
+    color: rgb(var(--color));
+    fill: rgb(var(--color));
+    font-weight: bolder;
+    font-size: 20px;
+    cursor: pointer;
+    border: 2px solid rgb(var(--color));
+    box-shadow: 0 0 10px rgba(var(--color), .4);
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5em 1em;
+}
+
+
+.btn-class-next:hover,
+.btn-class-prev:hover {
+    box-shadow: 0 0 0 5px rgba(var(--color), .5);
+}
+
+.btn-class-next span,
+.btn-class-prevs span {
+    transform: scale(.8);
+    transition: .3s;
+}
+
+.btn-class-next:hover span {
+    transform: scale(1);
+}
+
+.btn-class-prev:hover span {
+    transform: scale(1);
+}
+
+.btn-class-next svg,
+.btn-class-prev svg {
+    font-size: 0;
+    transform: scale(0.5) translateX(0%) rotate(-180deg);
+    transition: .3s;
+}
+
+.btn-class-next:hover svg {
+    font-size: 20px;
+    transform: scale(1) translateX(20%) rotate(0deg);
+}
+
+.btn-class-next:active,
+.btn-class-prev:active {
+    transition: 0s;
+    box-shadow: 0 0 0 5px rgb(var(--color));
+}
+
+
+.btn-class-prev:hover svg {
+    font-size: 20px;
+    transform: scale(1) translateX(-20%) rotate(0deg);
+}
+
+/* ANIMACIÓN CARGANDO */
+.wrapper {
+    width: 200px;
+    height: 60px;
+    position: relative;
+    z-index: 1;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: var(--light-color);
+    left: 15%;
+    transform-origin: 50%;
+    animation: circle7124 .5s alternate infinite ease;
+}
+
+@keyframes circle7124 {
+    0% {
+        top: 60px;
+        height: 5px;
+        border-radius: 50px 50px 25px 25px;
+        transform: scaleX(1.7);
+    }
+
+    40% {
+        height: 20px;
+        border-radius: 50%;
+        transform: scaleX(1);
+    }
+
+    100% {
+        top: 0%;
+    }
+}
+
+.circle:nth-child(2) {
+    left: 45%;
+    animation-delay: .2s;
+}
+
+.circle:nth-child(3) {
+    left: auto;
+    right: 15%;
+    animation-delay: .3s;
+}
+
+.shadow {
+    width: 20px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--background-color);
+    position: absolute;
+    top: 62px;
+    transform-origin: 50%;
+    z-index: -1;
+    left: 15%;
+    filter: blur(1px);
+    animation: shadow046 .5s alternate infinite ease;
+}
+
+@keyframes shadow046 {
+    0% {
+        transform: scaleX(1.5);
+    }
+
+    40% {
+        transform: scaleX(1);
+        opacity: .7;
+    }
+
+    100% {
+        transform: scaleX(.2);
+        opacity: .4;
+    }
+}
+
+.shadow:nth-child(4) {
+    left: 45%;
+    animation-delay: .2s
+}
+
+.shadow:nth-child(5) {
+    left: auto;
+    right: 15%;
+    animation-delay: .3s;
+}
+
+.fade-in-animation {
+    animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.loading {
+    display: flex;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

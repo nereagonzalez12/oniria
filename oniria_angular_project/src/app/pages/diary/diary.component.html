@@ -1,0 +1,176 @@
+<div class="basics diary">
+    <!-- <button type="button" (click)="createPost()>NUEVO SUEÑO</button>
+    <app-dream-list></app-dream-list>
+    -->
+
+    <div class="button-section">
+        <!-- Sección de botones de movil -->
+        <a class="movil">
+            <img src="assets\svg\lens_blue.svg" alt="lens_blue">
+            <img src="assets\svg\graphic.svg" alt="graphic">
+            <img src="assets\svg\add_blue_button.svg" alt="add_blue_button">
+            <img src="assets\svg\stars_icon.svg" alt="stars_icon">
+            <img src="assets\svg\people.svg" alt="people">
+        </a>
+
+        <div class="top-logo-section no-movil">
+            <img src="assets\svg\dark_moon.svg" alt="dark-moon" class="m-3 moon">
+            <!-- <img src="assets\svg\ilustration\1.svg" alt="1" class="one">
+            <img src="assets\svg\ilustration\little_star.svg" alt="little-star" class="little-star">
+            <img src="assets\svg\ilustration\4.svg" alt="4" class="four">
+            <img src="assets\svg\ilustration\large_star.svg" alt="large-star" class="large-star">
+            <img src="assets\svg\ilustration\3.svg" alt="3" class="three">
+            <img src="assets\svg\ilustration\little_star_light.svg" alt="little-star-light" class="little-star-light"> -->
+
+        </div>
+        <div class="search-create-section no-movil">
+            <div class="link-button">
+                <form [formGroup]="searchForm">
+                    <button type="submit"><img src="assets\svg\lens.svg" alt="lens"></button>
+                    <div class="title">
+                        <input type="text" formControlName="parameter" class="form-control input-search"
+                            placeholder="BUSCAR" name="searchQuery" (input)="searchPostsInput()" autocomplete="off">
+                    </div>
+                </form>
+            </div>
+            <a class="link-button" (click)="createPost()">
+                <div>
+                    <img src="assets\svg\add.svg" alt="add">
+                    CREAR SUEÑO
+                </div>
+            </a>
+        </div>
+        <div class="category-section no-movil">
+            <div class="category-text"><img src="assets\svg\stars_icon.svg" alt="stars_icon">
+                ETIQUETAS
+                <div class="info-icon">
+                    <span class="tooltip">Las etiquetas sirven para <b>categorizar</b> y buscar más fácilmente tus
+                        sueños
+                        usando estas referencias. A demás de las que vienen por defecto, puedes crear todas las que se
+                        te
+                        ocurran. <small class="dark-text">(Aportan información a los gráficos)</small></span>
+                    <img src="assets\svg\icon-info.svg" alt="icon-info" class="icon-info">
+                </div>
+            </div>
+            <div class="category-create" *ngIf="showCreateCategory">
+                <div>
+                    <app-create-category (discard)="categoryReceiveDiscard($event)"></app-create-category>
+                </div>
+            </div>
+
+            <div class="category-list" *ngIf="!showCreateCategory">
+                <div class="category-container" *ngFor="let cat of categoryList" (click)="toggleCategorySelection(cat)"
+                    [class.selected]="cat.selected">
+                    <div class="category" *ngIf="cat.is_default">
+                        {{cat.name | lowercase}}
+                    </div>
+                    <div class="category" *ngIf="!cat.is_default">
+                        {{cat.name | lowercase}} <button type="button" (click)="confirmDelete($event, cat)"><img
+                                class="delete-category-icon" src="assets\svg\cross-icon-mono.svg"
+                                alt="cross-icon-mono"></button>
+                    </div>
+                </div>
+            </div>
+
+            <a class=" link-button category-button" (click)="createCategory()" *ngIf="!showCreateCategory">
+                <div>
+                    <img src="assets\svg\add_blue_button.svg" alt="add-blue-button">
+                    AÑADIR
+                </div>
+            </a>
+        </div>
+        <div class="people-section no-movil">
+            <div class="category-text"><img src="assets\svg\people.svg" alt="people">
+                INTRUSOS
+                <div class="info-icon">
+                    <span class="tooltip">Los intrusos son personas reales que se cuelan ocasionalmente en
+                        tus sueños;
+                        amigos,
+                        familiares, famosos... Haz una lista de las personas involucradas en ellos para
+                        mejorar tus
+                        búsquedas. <small class="dark-text">(Aportan información a los gráficos)</small></span>
+                    <img src="assets\svg\icon-info.svg" alt="icon-info" class="icon-info">
+                </div>
+
+            </div>
+            <div class="category-create" *ngIf="showCreatePeople && !showCreateCategory">
+                <div>
+                    <app-create-people (discard)="peopleReceiveDiscard($event)"></app-create-people>
+                </div>
+            </div>
+            <div class="people-list" *ngIf="!noPeople && !showCreatePeople">
+                <div class="people-container" *ngFor="let person of peopleList" (click)="togglePeopleSelection(person)"
+                    [class.selected]="person.selected">
+                    <div class="people">
+                        <div class="people-content">
+                            <div>{{person.name}}</div>
+                            <div *ngIf="person.linked_user" style="color: var(--blue-color);">@{{
+                                getLinkedUserName(person.linked_user) }}</div>
+                        </div>
+                        <button type="button" (click)="confirmDeletePeople($event, person)"><img
+                                src="assets\svg\cross-icon-mono.svg" class="delete-category-icon"
+                                alt="cross-icon-mono"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="people-list" *ngIf="noPeople">
+                <div class="noPeople">
+                    No hay intrusos por aquí
+                </div>
+            </div>
+            <a class="link-button category-button" (click)="createPeople()" *ngIf="!showCreatePeople">
+                <div>
+                    <img src="assets\svg\add_blue_button.svg" alt="add-blue-button">
+                    AÑADIR
+                </div>
+            </a>
+        </div>
+        <div class="graphic-section no-movil">
+            <a class="graphic-button">
+                <div class="graphics">
+                    <img src="assets\svg\graphic.svg" alt="graphic">
+                </div>
+                <div class="graphic-text" [routerLink]="['/graphics']">
+                    GRÁFICOS DE SUEÑO
+                </div>
+            </a>
+        </div>
+        <footer class="footer-text no-movil">
+            <div>
+                <img src="assets\svg\oniria_text.svg" alt="oniria_text">
+            </div>
+        </footer>
+    </div>
+    <div class="post-section">
+        <div class="post-buttons">
+            <div class="post-section-button">
+                <div>DIARIO DE {{loggedInUsername | uppercase}}</div>
+            </div>
+        </div>
+        <div class="dream-list">
+            <app-delete-alert *ngIf="showDeleteCategoryAlert" [itemToDelete]="categoryToDelete"
+                (deleteConfirmed)="deleteCategoryConfirmed($event)" [deleteMessage]="'La etiqueta <b>' + (categoryToDelete?.name || '') + '</b> va a eliminarse de forma permanente
+                        de la lista y de los sueños asociados a ella. ¿Estás de acuerdo?'"
+                (deleteDismissed)="dismissDeleteCategory()">
+            </app-delete-alert>
+            <app-delete-alert *ngIf="showDeletePeopleAlert" [itemToDelete]="peopleToDelete"
+                (deleteConfirmed)="deletePeopleConfirmed($event)"
+                [deleteMessage]="'<b>' + (peopleToDelete?.name || '') + '</b> va a eliminarse de forma permanente
+                    de la lista de intrusos Los sueños no eliminarán el nombre pero dejarán de estar vinculados con este intruso o usuario. ¿Estás de acuerdo?'"
+                (deleteDismissed)="dismissDeletePeople()">
+            </app-delete-alert>
+            <div *ngIf="showCreatePost">
+                <app-create-dream (discard)="postReceiveDiscard($event)"
+                    (showPostForm)="postReceiveShow($event)"></app-create-dream>
+            </div>
+            <app-dream-list #childComponent [showCreatePost]="showCreatePost" [categoryList]="categoryList"
+                [peopleList]="peopleList"></app-dream-list>
+
+        </div>
+    </div>
+    <div class="profile-section">
+        <app-profile [loggedInId]="loggedInId" [loggedInUsername]="loggedInUsername" [first_name]="first_name"
+            [last_name]="last_name" [bio]="bio" [date_joined]="date_joined" [birthday]="birthday"></app-profile>
+    </div>
+    <app-logout-button></app-logout-button>
+</div>

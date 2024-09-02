@@ -1,0 +1,63 @@
+.people-form {
+    padding-left: 25px;
+    padding-right: 25px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+
+/* INPUTS -------------------*/
+.input-people,
+.input-description {
+    background-color: transparent;
+    color: var(--light-color);
+    border: none;
+    border-bottom: 3px solid var(--light-color);
+    border-left: 2px solid var(--light-color);
+    font-size: 18px;
+    margin-bottom: 15px;
+    resize: none;
+}
+
+.input-people::placeholder,
+textarea::placeholder {
+    color: var(--light-color) !important;
+}
+
+textarea::-webkit-scrollbar {
+    display: none !important;
+}
+
+.edit-post-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    width: 45%;
+    border-radius: 5px;
+    color: var(--light-color);
+    border: none;
+    border-bottom: 3px solid var(--light-color);
+    border-left: 2px solid var(--light-color);
+    background-color: var(--secondary-color);
+}
+
+button:hover {
+    background-color: var(--background-color);
+    border-bottom: 3px solid var(--purple-color);
+    border-left: 2px solid var(--purple-color);
+    color: var(--purple-color);
+}
+
+.input-username-decoration-text {
+    font-family: 'Arial';
+    color: var(--background-color);
+    font-weight: bolder;
+    background-color: var(--light-color);
+    border: 3px solid var(--light-color);
+    border-radius: 7px 0 0 7px;
+}

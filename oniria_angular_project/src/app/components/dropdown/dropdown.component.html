@@ -1,0 +1,47 @@
+<div class="visibility-popup">
+    <input type="radio" name="visibility" id="private" checked="">
+    <input type="radio" name="visibility" id="public">
+    <input type="radio" name="visibility" id="friends">
+    <input type="checkbox" id="checkbox">
+    <label for="checkbox" class="visibility-popup__button default">
+        <span class="visibility-popup__icons default">
+            <img class="public" src="assets/svg/public-icon.svg" alt="public-icon">
+            <img class="private" src="assets/svg/private-icon.svg" alt="private-icon">
+            <img class="friends" src="assets/svg/friends-privacity-icon.svg" alt="friends-icon">
+        </span>
+    </label>
+    <div class="visibility-popup__list-container">
+        <ul class="visibility-popup__list">
+            <li (click)="selectOption('public')">
+                <label for="public" class="tooltip-container">
+                    <span class="visibility-popup__icons">
+                        <img src="assets/svg/light-public-icon.svg" alt="public-icon">
+                    </span>
+                    <span class="text">
+                        Público
+                    </span>
+                </label>
+            </li>
+            <li (click)="selectOption('private')">
+                <label for="private" class="tooltip-container">
+                    <span class="visibility-popup__icons">
+                        <img src="assets/svg/light-private-icon.svg" alt="private-icon">
+                    </span>
+                    <span class="text">
+                        Privado
+                    </span>
+                </label>
+            </li>
+            <li (click)="selectOption('friends')">
+                <label for="friends">
+                    <span class="visibility-popup__icons">
+                        <img src="assets/svg/light-friends-privacity-icon.svg" alt="friends-icon">
+                    </span>
+                    <span class="text">
+                        Amigos
+                    </span>
+                </label>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+<div class="profile-container">
+    <ng-container *ngIf="selectedUser">
+        <div class="banner">
+            <div class="back-button">
+                <button class="back" (click)="clearProfile()">
+                    <svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 460.775 460.775" xml:space="preserve"
+                        stroke="#ffffff">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M285.08,230.397L456.218,59.27c6.076-6.077,6.076-15.911,0-21.986L423.511,4.565c-2.913-2.911-6.866-4.55-10.992-4.55 c-4.127,0-8.08,1.639-10.993,4.55l-171.138,171.14L59.25,4.565c-2.913-2.911-6.866-4.55-10.993-4.55 c-4.126,0-8.08,1.639-10.992,4.55L4.558,37.284c-6.077,6.075-6.077,15.909,0,21.986l171.138,171.128L4.575,401.505 c-6.074,6.077-6.074,15.911,0,21.986l32.709,32.719c2.911,2.911,6.865,4.55,10.992,4.55c4.127,0,8.08-1.639,10.994-4.55 l171.117-171.12l171.118,171.12c2.913,2.911,6.866,4.55,10.993,4.55c4.128,0,8.081-1.639,10.992-4.55l32.709-32.719 c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z">
+                            </path>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+            <div class="profile-img">
+                <a>
+                    <img *ngIf="profile_image_url" [src]="profile_image_url" alt="Profile Image">
+                    <img *ngIf="!profile_image_url" src="assets\svg\ilustration\owl_profile.svg" alt="Profile Image">
+                </a>
+            </div>
+
+        </div>
+        <div class="info-profile">
+            <div class="follow" *ngIf="!loadProfile"><button
+                    *ngIf="(!isFriend && friendId != selectedUser.id && !isRequestPending && selectedUser.id != loggedInId ) || sendRequestButtonActive"
+                    (click)="sendFriendRequest(selectedUser.id)" class="send-request">
+                    <img src="assets\svg\paper-plane-icon.svg" alt="paper-plane"> Solicitud de amistad
+                </button>
+                <button *ngIf="isRequestPending && selectedUser.id != loggedInId && !sendRequestButtonActive"
+                    class="sent-request" disabled>
+                    <img src="assets\svg\sent-request-icon.svg" alt="request-sent"> Solicitud pendiente
+                </button>
+                <button
+                    *ngIf="(isFriend || friendId == selectedUser.id) && selectedUser.id != loggedInId && !sendRequestButtonActive && !isRequestPending"
+                    class="edit delete-friend" (click)="removeFriend(selectedUser.id)">
+                    <img src="assets\svg\fat-dog-icon.svg" alt="fat-dog">
+                    Eliminar amigo
+                </button>
+                <button *ngIf="selectedUser.id === loggedInId && !sendRequestButtonActive" class="edit"
+                    routerLink="/diary">
+                    <img src="assets\svg\pencil-purple-icon.svg" alt="pencil-icon"> Editar en diario
+                </button>
+            </div>
+            <div class="follow" *ngIf="loadProfile">
+                <button *ngIf="selectedUser.id === loggedInId" class="edit">
+                    Cargando...
+                </button>
+            </div>
+            <div class="username">@{{ selectedUser.username }}</div>
+            <div class="name">
+                <div>
+                    {{ userName }}
+                </div>
+                <div class="birthday-date">
+                    <img class="cake" src="assets\svg\cake.svg" alt="cake"> {{ birthday | date: 'dd/MM' }}
+                </div>
+            </div>
+            <div class="bio" *ngIf="selectedUser.bio">{{ selectedUser.bio }}</div>
+            <div class="bio" *ngIf="!selectedUser.bio">Aún no tienes biografía</div>
+            <div class="date-joined"> {{ date_formatted }} <img src="assets\svg\calendar_dark.svg" alt="calendar_mono">
+            </div>
+            <div class="follow-info" *ngIf="followers.length === 1"><span>{{followers.length}}</span> amigo en Oniria
+            </div>
+            <div class="follow-info" *ngIf="followers.length !== 1"><span>{{followers.length}}</span> amigos en Oniria
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!selectedUser">
+        <div class="noSelectedUser">
+            <img src="assets\svg\ilustration\no-profile-ilustration.svg" alt="no-profile-ilustration" />
+        </div>
+    </ng-container>
+    <div class="requests">
+
+        <button class="show-requests"> <button (click)="changePage(currentPage - 1)"
+                [disabled]="currentPage === 1"><mark class="mark">&lt;</mark></button>Solicitudes de amistad<button
+                (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"><mark
+                    class="mark">&gt;</mark></button></button>
+        <div class="request-user-list">
+            <div *ngFor="let request of paginatedRequests; let i = index"
+                [ngClass]="{'primary-bg': isEven(i), 'secondary-bg': !isEven(i)}">
+                <div class="request-container">
+                    <div class="user-container">
+                        <div class="request-profile-image">
+                            <img *ngIf="request[1].profile_image" [src]="request[1].profile_image"
+                                alt="{{ request[1].username }}" />
+                            <img *ngIf="!request[1].profile_image" src="assets/svg/ilustration/owl_profile.svg"
+                                alt="Profile Image" />
+                        </div>
+                        <div class="request-user-info">
+                            <div class="request-username" (click)="obtainUserProfile(request[1].id)">
+                                @{{ request[1].username }}</div>
+                            <div class="request-name">{{ request[1].first_name }} {{ request[1].last_name }}</div>
+                        </div>
+                    </div>
+                    <div class="request-buttons">
+                        <button class="accept-request" (click)="acceptFriendRequest(request[0])">
+                            <img class="accept-icon" src="assets/svg/check-icon-white.svg" alt="check-icon-white">
+                        </button>
+                        <button class="reject-request" (click)="rejectFriendRequest(request[0])">
+                            <img class="reject-icon" src="assets/svg/cross-icon-white.svg" alt="cross-icon-white">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

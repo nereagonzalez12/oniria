@@ -1,0 +1,71 @@
+<div class="basics background">
+
+
+    <header>
+        <button class="back-diary" [routerLink]="['/diary']">
+            <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                    transform="scale(-1, 1) translate(-320, 0)" />
+            </svg>
+            <span>VOLVER AL DIARIO</span>
+        </button>
+        <img src="assets\svg\oniria_text.svg" alt="text-moon" class="text-moon">
+    </header>
+    <div class="content">
+        <div *ngIf="loading" class="fade-in-animation loading">
+            <div class="wrapper">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="shadow"></div>
+                <div class="shadow"></div>
+                <div class="shadow"></div>
+            </div>
+        </div>
+        <div class="left-content" *ngIf="!loading">
+            <div>
+                <div class="text">RANGO DE TIEMPO</div>
+                <div class="selected-range">
+                    <select id="timeRange" [(ngModel)]="selectedTimeRange" (change)="onTimeRangeChange()">
+                        <option value="historico">Histórico</option>
+                        <option value="esteAño">Este año</option>
+                        <option value="esteMes">Este mes</option>
+                        <option value="estaSemana">Esta semana</option>
+                    </select>
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+            <div class="people-pie">
+                <div class="dreams-count-container">
+                    <div>
+                        Has registrado
+                    </div> <mark class="dreams-count">{{postCount}}</mark>
+                    <div>{{postCountInfo}}</div>
+                </div>
+                <app-people-pie [peoplePostCounts]="peoplePostCounts" [peopleNames]="peopleNames"></app-people-pie>
+            </div>
+        </div>
+        <div class="center-content" *ngIf="!loading">
+            <div class="moon-container">
+                <img src="assets\svg\moon_mono.svg" alt="dark-moon" class="moon">
+            </div>
+            <app-category-donut class="category-donut" [categoryPostCounts]="categoryPostCounts"
+                [categoryNames]="categoryNames"></app-category-donut>
+
+        </div>
+        <div class="right-content" *ngIf="!loading">
+            <app-top-categories [topCategories]="topCategories"></app-top-categories>
+            <app-top-people [topPeople]="topPeople"></app-top-people>
+            <app-privacy-distribution [privacyCounts]="privacyCounts"></app-privacy-distribution>
+        </div>
+
+    </div>
+    <footer>
+        <app-logout-button></app-logout-button>
+        <div class="logo-container">
+            <img class="logo" src="assets\svg\logo.svg" alt="logo">
+        </div>
+    </footer>
+
+</div>

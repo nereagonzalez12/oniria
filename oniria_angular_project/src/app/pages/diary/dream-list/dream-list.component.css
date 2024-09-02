@@ -1,0 +1,383 @@
+.dream-post {
+    margin-top: 25px;
+    padding-bottom: 25px;
+    min-height: 40%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nonEmpty {
+    border-bottom: 0.15em solid var(--dark-color);
+}
+
+/* boton scroll ============================ */
+.scroll-up {
+    position: fixed;
+    /* right: 1018px; */
+    right: 82.5%;
+    top: 5%;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    border-radius: 5px;
+    background-color: black;
+    opacity: 20%;
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: bottom .4s, transform .4s;
+}
+
+.scroll-up:hover {
+    transform: translateY(-.25rem);
+}
+
+
+
+/* CONTENIDO DE LOS POSTS ----------------*/
+.bubble-dream {
+    height: 70%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    font-weight: 300;
+}
+
+.post-title {
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-right: 5px;
+}
+
+.post-content {
+    color: var(--post-text-color);
+    background-color: var(--font-post-color);
+    height: 70%;
+    border-radius: 10px 10px 0 10px;
+    padding: 1em;
+    box-shadow: -5px -5px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* CATEGORÍAS EN LOS POST */
+.list-post-categories {
+    margin-top: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    /* Para que los elementos se envuelvan si no caben en una sola línea */
+}
+
+.category-container {
+    color: var(--font-post-color);
+    font-weight: 600;
+    background-color: var(--secondary-color);
+    border-radius: 100px;
+    margin: 5px;
+    padding: 3px 12px 4px 12px;
+    font-size: 15px;
+}
+
+.category-content {
+    display: flex;
+    /* Para que el contenido se expanda horizontalmente */
+    align-items: center;
+    /* Para alinear verticalmente el contenido */
+}
+
+
+/* BOTONES */
+.edit-post-buttons {
+    background-color: var(--font-post-color);
+    height: 38px;
+    min-width: 70%;
+    align-self: self-end;
+    border-radius: 0 0 20px 20px;
+    margin-top: 3px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: inset 0 8px 10px rgba(0, 0, 0, 0.15);
+}
+
+.visibility-popup-categories,
+.visibility-popup-people {
+    display: none;
+    /* position: absolute; */
+
+}
+
+.visibility-popup-categories.active,
+.visibility-popup-people.active {
+    display: block;
+    position: absolute;
+    /* Utilizar las variables CSS personalizadas para posicionar el popup */
+    left: var(--click-pos-x);
+    top: var(--click-pos-y);
+}
+
+
+
+.edit-post-date-section {
+    position: absolute;
+}
+
+.edit-post-buttons button {
+    background-color: transparent;
+    border: none;
+    color: var(--secondary-color);
+    font-weight: 500;
+    font-size: 21px;
+    display: flex;
+    align-items: center;
+}
+
+.edit-post-buttons button:hover {
+    color: var(--light-color);
+}
+
+.edit-buton img {
+    width: 33%;
+}
+
+.category-button img,
+.people-button img {
+    width: 1.2em;
+    margin-right: 5px;
+}
+
+.public-button img,
+.private-button img,
+.friends-button img {
+    margin-right: 6px;
+}
+
+.public-button img {
+    width: 18%;
+}
+
+.private-button img {
+    width: 17%;
+}
+
+.friends-button img {
+    width: 15%;
+}
+
+.delete-post-button img {
+    width: 90%;
+}
+
+/* DISEÑO EDITMODE */
+.edit-post-title {
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-right: 5px;
+}
+
+.post-content {
+    color: var(--post-text-color);
+    background-color: var(--font-post-color);
+    height: 65%;
+    border-radius: 10px 10px 0 10px;
+    padding: 1em;
+    box-shadow: -5px -5px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.category-content button {
+    background-color: transparent;
+    border: none;
+    width: auto;
+    margin-right: 0;
+    padding: 0;
+    margin-left: 4px;
+}
+
+.delete-category-icon {
+    width: 13px;
+    height: 100%;
+    margin-left: 3px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.delete-category-icon:hover {
+    transform: scale(1.3);
+
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-5deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+
+    75% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.shaking {
+    animation: shake 0.3s ease;
+}
+
+
+
+/* INPUTS -------------------*/
+.edit-input-title,
+.edit-input-date,
+.edit-input-content {
+    background-color: transparent;
+    color: var(--light-color);
+    border: none;
+    border-bottom: 3px solid var(--light-color);
+    border-left: 2px solid var(--light-color);
+    font-size: 18px;
+}
+
+.edit-input-title::placeholder,
+textarea::placeholder {
+    color: var(--light-color) !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    background-image: url(src\assets\svg\calendar_mono.svg);
+    width: 1.5em;
+    height: 1.5em;
+    border-width: thin;
+}
+
+
+
+
+
+.save-button:hover {
+    color: var(--purple-color) !important;
+}
+
+.save-button:hover .checkmark {
+    stroke: var(--purple-color);
+    cursor: pointer;
+}
+
+.checkmark {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 4;
+    stroke: var(--secondary-color);
+    stroke-miterlimit: 10;
+    stroke-dashoffset: 0;
+    padding-bottom: 5px;
+    margin-right: 3px;
+}
+
+.discard-button:hover {
+    color: var(--red-color) !important;
+}
+
+.public-buton img {
+    width: 22%;
+    margin-right: 5px;
+}
+
+/* DESPLEGABLE */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.public-button {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.public-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content.show {
+    display: block;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+
+.dark-text {
+    color: var(--blue-color);
+}
+
+.infoPriv {
+    display: none;
+    font-size: 13px;
+    color: var(--light-color);
+    position: absolute;
+    background: var(--font-post-color);
+    width: 300px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    left: var(--click-pos-x);
+    top: var(--click-pos-y);
+}
+
+.info-container {
+    position: absolute;
+    left: -1em;
+    right: unset;
+    top: calc(1.17em + 0.35em);
+    box-shadow: -5px -5px 10px 0 rgba(0, 0, 0, 0.1), 5px 5px 10px 0 rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
