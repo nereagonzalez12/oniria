@@ -1,4 +1,4 @@
-# 🌙 Oniria - Dream Journal Web App <img src="./oniria_angular_project/src/favicon.ico" alt="oniria favicon" height="50">
+# <img src="./oniria_angular_project/src/favicon.ico" alt="oniria favicon" height="45"> Oniria - Dream Journal Web App 
 
 ### [English](#english-version) | [Español](#versión-en-español)
 
