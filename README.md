@@ -1,4 +1,4 @@
-# 🌙 Oniria - Dream Journal Web App
+# 🌙 Oniria - Dream Journal Web App ![Logo](./oniria_angular_project/src/favicon.ico)
 
 ### [English](#english-version) | [Español](#versión-en-español)
 
@@ -66,18 +66,35 @@ oniria/
 
 ### 📸 Capturas de Pantalla:
 ![Logo](./oniria_angular_project/src/assets/screenshots/logo.png)
+
+---
+
 ![Autenticación](./oniria_angular_project/src/assets/screenshots/auth-section.png)
+
+---
+
 ![Crear cuenta](./oniria_angular_project/src/assets/screenshots/create-account.png)
+
+---
+
 ![Diario](./oniria_angular_project/src/assets/screenshots/diary.png)
+
+---
+
 ![Gráficos](./oniria_angular_project/src/assets/screenshots/graphics.png)
+
+---
+
 ![Sección pública](./oniria_angular_project/src/assets/screenshots/public-section.png)
+
+---
+
 ![Página de me gusta](./oniria_angular_project/src/assets/screenshots/empty-liked-post.png)
 
 ---
 
 ## English Version
 
-# 🌙 Oniria - Dream Journal Web App
 
 ## 📖 Project Description
 
@@ -141,9 +158,27 @@ oniria/
 
 ### 📸 Screenshots:
 ![Logo](./oniria_angular_project/src/assets/screenshots/logo.png)
+
+---
+
 ![Autenticación](./oniria_angular_project/src/assets/screenshots/auth-section.png)
+
+---
+
 ![Crear cuenta](./oniria_angular_project/src/assets/screenshots/create-account.png)
+
+---
+
 ![Diario](./oniria_angular_project/src/assets/screenshots/diary.png)
+
+---
+
 ![Gráficos](./oniria_angular_project/src/assets/screenshots/graphics.png)
+
+---
+
 ![Sección pública](./oniria_angular_project/src/assets/screenshots/public-section.png)
+
+---
+
 ![Página de me gusta](./oniria_angular_project/src/assets/screenshots/empty-liked-post.png)
